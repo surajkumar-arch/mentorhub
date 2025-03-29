@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background: #f4f6f9;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar button {
+            padding: 15px;
+            margin: 10px 0;
+            background: #80b3e6;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            width: 100%;
+            border: none;
+            color: white;
+        }
+
+        .sidebar button:hover {
+            background: #4b0ddd;
+        }
+
+        /* Main Dashboard */
+        .main-content {
+            margin-left: 250px; /* Offset by the width of the sidebar */
+            padding: 40px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .student-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .student-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #3498db;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .student-name {
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
+        .student-email {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .search-bar input {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Course List */
+        .course-list {
+            margin-top: 20px;
+        }
+
+        .course-card {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-card h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .course-card span {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        /* No result message */
+        .not-found {
+            display: none;
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Mentor Hub</h2>
+        <ul>
+            <li><button>Dashboard</button></li>
+            <li><button type="submit" class="login-btn" onclick="location.href='db.html'">My Courses</button></li>
+            <li><button class="start-btn" onclick="window.location.href='note.html'">Notes</button></li>
+            <li><button class="start-btn" onclick="window.location.href='payandlearm.html'">Pay and Learn</button></li>
+            <li><button class="start-btn" onclick="window.location.href='setting.html'">Settings</button></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div class="student-profile">
+                <div class="student-logo" id="studentLogo"></div>
+                <div>
+                    <h3 id="studentName">Suraj Kumar</h3>
+                    <p id="studentEmail">suraj@example.com</p>
+                </div>
+            </div>
+            <h2>Mentor Hub Dashboard</h2>
+        </div>
+
+        <!-- Search Course -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for a course..." onkeyup="searchCourse()">
+        </div>
+
+        <!-- Joined Courses -->
+        <div class="course-list" id="courseList">
+            
+
+            <div class="course-card">
+                <h3>Full Stack Development</h3>
+               
+            </div>
+
+            <div class="course-card">
+                <h3>Data Structures & Algorithms</h3>
+                
+            </div>
+
+            <div class="course-card">
+                <h3>Machine Learning</h3>
+            
+            </div>
+
+            <div class="course-card">
+                <h3>Cyber Security</h3>
+                
+            </div>
+        </div>
+
+        <p class="not-found" id="noResult">No courses found!</p>
+    </div>
+
+    <script>
+        // Function to create student logo with initials
+        function createStudentLogo(name) {
+            const initials = name.split(' ').map(word => word[0]).join('').toUpperCase();
+            document.getElementById('studentLogo').innerText = initials;
+        }
+
+        // Set student details dynamically
+        document.addEventListener("DOMContentLoaded", function () {
+            const studentName = "Suraj Kumar"; // You can replace with dynamic user data
+            document.getElementById('studentName').innerText = studentName;
+            createStudentLogo(studentName);
+        });
+
+        // Function to search courses
+        function searchCourse() {
+            let input = document.getElementById("searchInput").value.toLowerCase();
+            let courses = document.getElementsByClassName("course-card");
+            let found = false;
+
+            for (let i = 0; i < courses.length; i++) {
+                let courseName = courses[i].getElementsByTagName("h3")[0].innerText.toLowerCase();
+                if (courseName.includes(input)) {
+                    courses[i].style.display = "flex";
+                    found = true;
+                } else {
+                    courses[i].style.display = "none";
+                }
+            }
+
+            document.getElementById("noResult").style.display = found ? "none" : "block";
+        }
+    </script>
+
+</body>
+</html>

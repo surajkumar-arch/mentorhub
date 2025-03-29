@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Notes - Mentor Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #ecf0f1, #ffffff);
+            color: #2c3e50;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            color: #2c3e50;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2980b9;
+            font-size: 24px;
+        }
+
+        .notes {
+            background-color: #f4f6f9;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .notes p {
+            margin-bottom: 10px;
+        }
+
+        .links {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .links li {
+            margin-top: 10px;
+        }
+
+        .links a {
+            color: #2980b9;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .links a:hover {
+            color: #1f6592;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .notes {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Student Notes</h2>
+        
+        <div class="notes">
+            <p><strong>Today's Notes:</strong></p>
+            <p id="savedNotes">Loading notes...</p>
+        </div>
+
+        <h3>Online Links:</h3>
+        <ul class="links" id="savedLinks">
+            <li>Loading links...</li>
+        </ul>
+
+        <button class="back-btn" onclick="window.location.href='dashboardstudent.html'">Back to Dashboard</button>
+    </div>
+
+    <script>
+        // Load saved notes and links from localStorage
+        document.getElementById("savedNotes").innerText = localStorage.getItem("teacherNotes") || "No notes available.";
+
+        let savedLinks = JSON.parse(localStorage.getItem("teacherLinks")) || [];
+        let linksList = document.getElementById("savedLinks");
+
+        if (savedLinks.length > 0) {
+            linksList.innerHTML = savedLinks.map(link => `
+                <li><a href="${link}" target="_blank">${link}</a></li>
+            `).join('');
+        } else {
+            linksList.innerHTML = "<li>No links available.</li>";
+        }
+    </script>
+
+</body>
+</html>

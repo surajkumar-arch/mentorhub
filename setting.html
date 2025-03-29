@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Settings</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(white);
+            color: white;
+            text-align: center;
+        }
+
+        .settings-container {
+            background-color: white;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .settings-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn {
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-save {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-logout {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: -10px;
+            font-size: 12px;
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <div class="settings-header">
+            <h2>Settings</h2>
+        </div>
+
+        <div class="settings-form">
+            <div class="input-group">
+                <label for="profile-name">Profile Name</label>
+                <input type="text" id="profile-name" placeholder="Enter your name">
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+
+            <div class="input-group">
+                <label for="old-password">Old Password</label>
+                <input type="password" id="old-password" placeholder="Enter Old password">
+                <div id="old-password-error" class="error-message"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" placeholder="Enter New password">
+                <div id="new-password-error" class="error-message"></div>
+            </div>
+
+            <div class="buttons">
+                <button id="save-settings" class="btn btn-save">Save Changes</button>
+                <button id="back-btn" class="btn btn-logout" onclick="location.href='welcomepage.html'">Log Out</button>
+            </div>
+
+            <div id="success-message" class="success-message"></div>
+        </div>
+    </div>
+
+    <script>
+        // Handle saving settings
+        document.getElementById('save-settings').addEventListener('click', function() {
+            const profileName = document.getElementById('profile-name').value;
+            const email = document.getElementById('email').value;
+            const oldPassword = document.getElementById('old-password').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            // Clear previous error messages
+            document.getElementById('old-password-error').innerText = '';
+            document.getElementById('new-password-error').innerText = '';
+
+            // Validate the fields
+            if (profileName.trim() === '' || email.trim() === '' || oldPassword.trim() === '' || newPassword.trim() === '') {
+                alert('Please fill all fields before saving.');
+                return;
+            }
+
+            // Password validation (e.g., old password cannot be the same as new password)
+            if (oldPassword === newPassword) {
+                document.getElementById('new-password-error').innerText = 'New password cannot be the same as the old password.';
+                return;
+            }
+
+            // Simulate saving settings (Replace with backend API call in real application)
+            console.log('Settings Saved:', { profileName, email, oldPassword, newPassword });
+
+            // Display success message
+            document.getElementById('success-message').innerText = 'Settings saved successfully!';
+
+            // Optionally, clear the fields after saving
+            document.getElementById('profile-name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('old-password').value = '';
+            document.getElementById('new-password').value = '';
+        });
+
+        // Handle logout (Redirecting to the login page)
+        document.getElementById('back-btn').addEventListener('click', function() {
+            // Simulate logging out (Replace with backend logout functionality)
+            console.log('User logged out');
+            alert('Logged out successfully!');
+            window.location.href = 'welcomepage.html'; // Redirect to logout page
+        });
+    </script>
+</body>
+</html>
